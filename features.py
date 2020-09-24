@@ -7,7 +7,7 @@ import numpy as np
 
 
 def get_features():
-    # return ['Return', 'Rela_volume', 'HdL', 'Rvol', 'MACD']
+    return ['Return', 'Rela_volume', 'HdL', 'Rvol', 'MACD']
 
 def Return(df):
     close = df['Close']
