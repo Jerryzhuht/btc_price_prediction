@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 def get_features():
-          return ['Return', 'Rela_volume', 'vix', 'snp_return', 'gold_return']
+    return ['Return', 'Rela_volume', 'vix', 'snp_return', 'gold_return', 'yield_10y']
 
 def Return(df):
     close = df['Close']
