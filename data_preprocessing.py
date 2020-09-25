@@ -33,7 +33,7 @@ def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
 def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05, predict_horizon=7):
     
     norm_features = normalize_feature(df_features, test_start, alpha)
-    labels = np.log(df['Close'].shift(-predict_horizon)  / df['Close'])
+    labels = np.log(df['Close'].shift(-predict_horizon)  / df['Close']) * 100  # return in (%)
     norm_features['label'] = labels 
 
     current_price = df['Close']
