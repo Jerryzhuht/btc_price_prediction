@@ -43,7 +43,7 @@ def get_strided(data, window_len):
     row_stride, col_stride = data.strides
     return as_strided(
         x=data, 
-        shape=(row-window_len+1, window_len, cols), 
+        shape=(row-window_len+1, window_len, col), 
         strides=(row_stride, row_stride, col_stride),
         )
 
