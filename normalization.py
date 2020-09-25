@@ -25,10 +25,12 @@ def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
 
     return norm_features
 
-def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05):
-    
+def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05, predict_horizon=7):
+    """
+    predict_horizon: 7 means predict next 7-day return.
+    """
     norm_features = normalize_feature(df_features, test_start, alpha)
-    labels = np.log(df['Close'].shift(-7)  / df['Close'])
+    labels = np.log(df['Close'].shift(-predict_horizon)  / df['Close'])
     norm_features['label'] = labels 
     
     return norm_features.dropna()
