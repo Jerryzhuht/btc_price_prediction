@@ -29,10 +29,10 @@ def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
 
     return norm_features
 
-def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05):
+def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05, predict_horizon=7):
     
     norm_features = normalize_feature(df_features, test_start, alpha)
-    labels = np.log(df['Close'].shift(-7)  / df['Close'])
+    labels = np.log(df['Close'].shift(-predict_horizon)  / df['Close'])
     norm_features['label'] = labels 
 
     return norm_features.dropna()
@@ -47,7 +47,7 @@ def get_strided(data, window_len):
         )
 
 def get_x_y(df, y_label, window_x):
-          y = df[y_label].values[window_x-1:]
+    y = df[y_label].values[window_x-1:]
     x = df.drop(labels=y_label, axis=1).values
     return get_strided(x, window_x), np.expand_dims(y,axis=(1,2))
 
