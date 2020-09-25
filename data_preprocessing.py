@@ -37,6 +37,8 @@ def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0
     norm_features['label'] = labels 
 
     current_price = df['Close']
+    average_price = current_price.rolling(28).mean()
+    norm_features['average price'] = average_price
     norm_features['current price'] = current_price
     future_price = df['Close'].shift(-predict_horizon)
     norm_features['future price'] = future_price
