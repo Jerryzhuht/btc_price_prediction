@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np 
 from sklearn.preprocessing import RobustScaler
 from numpy.lib.stride_tricks import as_strided
+from datetime import timedelta
 
 def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
     """
@@ -29,11 +30,16 @@ def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
 
     return norm_features
 
-def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05):
+def get_norm_feature_and_label(df_features, df, test_start='2020-01-01', alpha=0.05, predict_horizon=7):
     
     norm_features = normalize_feature(df_features, test_start, alpha)
-    labels = np.log(df['Close'].shift(-7)  / df['Close'])
+    labels = np.log(df['Close'].shift(-predict_horizon)  / df['Close']) * 100  # return in (%)
     norm_features['label'] = labels 
+
+    current_price = df['Close']
+    norm_features['current price'] = current_price
+    future_price = df['Close'].shift(-predict_horizon)
+    norm_features['future price'] = future_price
 
     return norm_features.dropna()
 
