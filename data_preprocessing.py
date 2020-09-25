@@ -53,7 +53,7 @@ def get_strided(data, window_len):
         )
 
 def get_x_y(df, y_label, window_x):
-    y = df[y_label].values[window_x-1:]
+    y = df[y_label].values[window_x-1:,:]
     x = df.drop(labels=y_label, axis=1).values
     return get_strided(x, window_x), y
 
@@ -62,7 +62,8 @@ def get_train_val_test(df, window_x, y_label, val_start='2019-07-01', test_start
     train_end = pd.to_datetime(val_start) + timedelta(days=window_x-1)
     train_df = df.loc[:train_end,:]
     data['train_x'], data['train_y'] = get_x_y(train_df, y_label, window_x)
-    val_df = df.loc[val_start:test_start,:]
+    val_end = pd.to_datetime(test_start) - timedelta(days=1)
+    val_df = df.loc[val_start:val_end,:]
     data['val_x'], data['val_y'] = get_x_y(val_df, y_label, window_x)
     test_df = df.loc[test_start:,:]
     data['test_x'], data['test_y'] = get_x_y(test_df, y_label, window_x)
