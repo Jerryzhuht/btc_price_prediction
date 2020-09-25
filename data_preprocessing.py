@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np 
 from sklearn.preprocessing import RobustScaler
 from numpy.lib.stride_tricks import as_strided
+from datetime import timedelta
 
 def normalize_feature(df_features, test_start='2020-01-01', alpha=0.05):
     """
